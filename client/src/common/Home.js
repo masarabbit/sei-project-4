@@ -3,8 +3,8 @@ import { getItems } from '../lib/api'
 // import dynamicSort from '../lib/sort'
 import { Link } from 'react-router-dom'
 
-import PikachuLoadingScreen from '../PokeComponents/PikachuLoadingScreen'
-import SlowPokeErrorCard from '../PokeComponents/SlowpokeErrorCard'
+import PikachuLoadingScreen from '../components/PikachuLoadingScreen'
+import SlowPokeErrorCard from '../components/SlowpokeErrorCard'
 
 import leftArrow from '../assets/arrow_left_white.svg'
 import rightArrow from '../assets/arrow_right_white.svg'

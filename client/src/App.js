@@ -7,16 +7,16 @@ import Nav from './common/Nav'
 import PokeLogin from './auth/PokeLogin'
 import PokeRegister from './auth/PokeRegister'
 
-import PokeBasket from './PokeComponents/PokeBasket'
-import PokeComment from './PokeComponents/PokeComment'
-import PokePayment from './PokeComponents/PokePayment'
-import PokePurchased from './PokeComponents/PokePurchased'
-import PokeShow from './PokeComponents/PokeShow'
-import PokeIndex from './PokeComponents/PokeIndex'
-import PokeProfile from './PokeComponents/PokeProfile'
-import PokeConfirmation from './PokeComponents/PokeConfirmation'
-import PokeCheckout from './PokeComponents/PokeCheckout'
-import PokeThankyou from './PokeComponents/PokeThankyou'
+import PokeBasket from './components/PokeBasket'
+import PokeComment from './components/PokeComment'
+import PokePayment from './components/PokePayment'
+import PokePurchased from './components/PokePurchased'
+import PokeShow from './components/PokeShow'
+import PokeIndex from './components/PokeIndex'
+import PokeProfile from './components/PokeProfile'
+// import PokeConfirmation from './components/PokeConfirmation'
+import PokeCheckout from './components/PokeCheckout'
+import PokeThankyou from './components/PokeThankyou'
 
 
 
@@ -38,7 +38,7 @@ function App() {
         <Route exact path="/pokepayment" component={PokePayment} />
         <Route exact path="/pokepurchased" component={PokePurchased} />
         <Route path="/pokeshow/:id" component={PokeShow} />
-        <Route path="/pokeconfirmation" component={PokeConfirmation} />
+        {/* <Route path="/pokeconfirmation" component={PokeConfirmation} /> */}
         <Route path="/pokecheckout" component={PokeCheckout} />
       </Switch>
     </BrowserRouter>

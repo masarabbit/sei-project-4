@@ -1,4 +1,5 @@
 import User from '../models/user.js'
+import { notFound } from '../lib/errorHandler.js'
 // import mongoose from 'mongoose'
 
 // user index 
@@ -59,7 +60,7 @@ async function addItemToBasket(req, res, next) {
     user.basket.push(req.body)
     await user.save()
     return res.status(201).json(user)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 }
@@ -71,7 +72,7 @@ async function updateBasket(req, res, next) {
     const user = await User.findById(req.currentUser._id)
     if (!user) throw new Error('notFound')
     const itemToUpdate = user.basket.id(itemId)
-    if (!itemToUpdate) throw new Error ('Item not found')
+    if (!itemToUpdate) throw new Error('Item not found')
     await itemToUpdate.remove()
     user.basket.push(req.body)
     await user.save()
@@ -91,11 +92,11 @@ async function removeItemFromBasket(req, res, next){
     const user = await User.findById(req.currentUser._id)
     if (!user) throw new Error('notFound')
     const itemToRemove = user.basket.id(itemId)
-    if (!itemToRemove) throw new Error ('Item not found')
+    if (!itemToRemove) throw new Error('Item not found')
     await itemToRemove.remove()
     await user.save()
     return res.sendStatus(204)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 
@@ -110,7 +111,7 @@ async function checkoutAndEmptybasket(req, res, next){ //also add to recent purc
     user.basket = []
     await user.save()
     return res.json(user)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 

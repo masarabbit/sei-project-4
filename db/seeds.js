@@ -33,7 +33,7 @@ async function seedDatabase() {
       function randomGen() {
         return Math.floor(Math.random() * userData.length)
       }
-      let rater = randomRatingGen()
+      const rater = randomRatingGen()
       function randomiseNeutralComments() {
         return neutralCommentDatabase[ranNumFromNeutralData()]
       }
@@ -44,59 +44,59 @@ async function seedDatabase() {
         return goodCommentDatabase[ranNumFromGoodData()]
       }
       const randomCommentQuantityGen = Math.floor(Math.random() * 4)
-        // if rating 3 && Changing Quantities
-        if (rater === 3 && randomCommentQuantityGen === 0) { 
-          item.comments = [{
-            text: randomiseNeutralComments(), 
-            rating: rater, 
-            owner: users[randomGen()].id
-          }]
-        } else if (rater === 3 && randomCommentQuantityGen === 1) {
-          item.comments = [{
-            text: randomiseNeutralComments(), 
-            rating: 2, 
-            owner: users[randomGen()].id
-          }]
-          item.comments.push({
-            text: randomiseNeutralComments(),
-            rating: rater,
-            owner: users[randomGen()].id
-          })
-        } else if (rater === 3 && randomCommentQuantityGen === 2) {
-          item.comments = [{
-            text: randomiseNeutralComments(), 
-            rating: 2, 
-            owner: users[randomGen()].id
-          }]
-          item.comments.push({
-            text: randomiseNeutralComments(),
-            rating: rater,
-            owner: users[randomGen()].id
-          }, {
-            text: randomiseNeutralComments(),
-            rating: 2,
-            owner: users[randomGen()].id
-          })
-        } else if (rater === 3 && randomCommentQuantityGen === 3) {
-          item.comments = [{
-            text: randomiseNeutralComments(), 
-            rating: rater, 
-            owner: users[randomGen()].id
-          }]
-          item.comments.push({
-            text: randomiseNeutralComments(),
-            rating: rater,
-            owner: users[randomGen()].id
-          }, {
-            text: randomiseNeutralComments(),
-            rating: 2,
-            owner: users[randomGen()].id
-          }, {
-            text: randomiseNeutralComments(),
-            rating: 2,
-            owner: users[randomGen()].id
-          })
-        }
+      // if rating 3 && Changing Quantities
+      if (rater === 3 && randomCommentQuantityGen === 0) { 
+        item.comments = [{
+          text: randomiseNeutralComments(), 
+          rating: rater, 
+          owner: users[randomGen()].id
+        }]
+      } else if (rater === 3 && randomCommentQuantityGen === 1) {
+        item.comments = [{
+          text: randomiseNeutralComments(), 
+          rating: 2, 
+          owner: users[randomGen()].id
+        }]
+        item.comments.push({
+          text: randomiseNeutralComments(),
+          rating: rater,
+          owner: users[randomGen()].id
+        })
+      } else if (rater === 3 && randomCommentQuantityGen === 2) {
+        item.comments = [{
+          text: randomiseNeutralComments(), 
+          rating: 2, 
+          owner: users[randomGen()].id
+        }]
+        item.comments.push({
+          text: randomiseNeutralComments(),
+          rating: rater,
+          owner: users[randomGen()].id
+        }, {
+          text: randomiseNeutralComments(),
+          rating: 2,
+          owner: users[randomGen()].id
+        })
+      } else if (rater === 3 && randomCommentQuantityGen === 3) {
+        item.comments = [{
+          text: randomiseNeutralComments(), 
+          rating: rater, 
+          owner: users[randomGen()].id
+        }]
+        item.comments.push({
+          text: randomiseNeutralComments(),
+          rating: rater,
+          owner: users[randomGen()].id
+        }, {
+          text: randomiseNeutralComments(),
+          rating: 2,
+          owner: users[randomGen()].id
+        }, {
+          text: randomiseNeutralComments(),
+          rating: 2,
+          owner: users[randomGen()].id
+        })
+      }
       // if rating below 2 && Changing Quantities
       if (rater <= 2 && randomCommentQuantityGen === 0) { 
         item.comments = [{
@@ -150,61 +150,61 @@ async function seedDatabase() {
           owner: users[randomGen()].id
         })
       }
-    // if rating more than 3 && Changing Quantities
-    if (rater > 3 && randomCommentQuantityGen === 0) { 
-      item.comments = [{
-        text: randomiseGoodComments(), 
-        rating: rater, 
-        owner: users[randomGen()].id
-      }]
-    } else if (rater > 3 && randomCommentQuantityGen === 1) {
-      item.comments = [{
-        text: randomiseGoodComments(), 
-        rating: rater, 
-        owner: users[randomGen()].id
-      }]
-      item.comments.push({
-        text: randomiseGoodComments(),
-        rating: 5,
-        owner: users[randomGen()].id
-      })
-    } else if (rater > 3 && randomCommentQuantityGen === 2) {
-      item.comments = [{
-        text: randomiseGoodComments(), 
-        rating: rater, 
-        owner: users[randomGen()].id
-      }]
-      item.comments.push({
-        text: randomiseGoodComments(),
-        rating: 4,
-        owner: users[randomGen()].id
-      }, {
-        text: randomiseGoodComments(),
-        rating: 5,
-        owner: users[randomGen()].id
-      })
-    } else if (rater > 3 && randomCommentQuantityGen === 3) {
-      item.comments = [{
-        text: randomiseGoodComments(), 
-        rating: rater, 
-        owner: users[randomGen()].id
-      }]
-      item.comments.push({
-        text: randomiseGoodComments(),
-        rating: 4,
-        owner: users[randomGen()].id
-      }, {
-        text: randomiseGoodComments(),
-        rating: rater,
-        owner: users[randomGen()].id
-      }, {
-        text: randomiseGoodComments(),
-        rating: 4,
-        owner: users[randomGen()].id
-      })
-    }
-    return item 
-  })
+      // if rating more than 3 && Changing Quantities
+      if (rater > 3 && randomCommentQuantityGen === 0) { 
+        item.comments = [{
+          text: randomiseGoodComments(), 
+          rating: rater, 
+          owner: users[randomGen()].id
+        }]
+      } else if (rater > 3 && randomCommentQuantityGen === 1) {
+        item.comments = [{
+          text: randomiseGoodComments(), 
+          rating: rater, 
+          owner: users[randomGen()].id
+        }]
+        item.comments.push({
+          text: randomiseGoodComments(),
+          rating: 5,
+          owner: users[randomGen()].id
+        })
+      } else if (rater > 3 && randomCommentQuantityGen === 2) {
+        item.comments = [{
+          text: randomiseGoodComments(), 
+          rating: rater, 
+          owner: users[randomGen()].id
+        }]
+        item.comments.push({
+          text: randomiseGoodComments(),
+          rating: 4,
+          owner: users[randomGen()].id
+        }, {
+          text: randomiseGoodComments(),
+          rating: 5,
+          owner: users[randomGen()].id
+        })
+      } else if (rater > 3 && randomCommentQuantityGen === 3) {
+        item.comments = [{
+          text: randomiseGoodComments(), 
+          rating: rater, 
+          owner: users[randomGen()].id
+        }]
+        item.comments.push({
+          text: randomiseGoodComments(),
+          rating: 4,
+          owner: users[randomGen()].id
+        }, {
+          text: randomiseGoodComments(),
+          rating: rater,
+          owner: users[randomGen()].id
+        }, {
+          text: randomiseGoodComments(),
+          rating: 4,
+          owner: users[randomGen()].id
+        })
+      }
+      return item 
+    })
     const items = await Item.create(itemsWithComments)
     console.log(itemsWithComments)
     console.log(`🤖 ${items.length} items created`)
