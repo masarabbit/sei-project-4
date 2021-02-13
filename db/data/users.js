@@ -236,7 +236,7 @@ export default [
     email: 'masa@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
-    image: 'https://res.cloudinary.com/dcwxp0m8g/image/upload/v1610572650/user_image/sprite25.png',
+    image: 'https://res.cloudinary.com/dcwxp0m8g/image/upload/v1613254433/user_image/icon5.png',
     address: '30 pallet town',
     dob: '10/07/1992'
   }, {
