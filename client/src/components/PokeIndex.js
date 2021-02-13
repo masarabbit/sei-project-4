@@ -25,10 +25,6 @@ function PokeIndex() {
     return result
   }
   
-  //* styling for the load animation
-  // function load() {
-  //   setPikaPos({ pika: 'calc(100% - 100px)', bar: '100%' })
-  // }
   
   //* scrolls to top of page when page is changed 
   React.useEffect(() => {
@@ -156,10 +152,3 @@ function PokeIndex() {
 
 export default PokeIndex
 
-
-{/* <div className="center_box">
-<div className="bar">
-  <div className="inside"></div>
-</div>
-<img className="pika" src={pika} alt="pikachu" />
-</div>  */}

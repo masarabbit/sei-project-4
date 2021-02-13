@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom'
-import { logout } from '../lib/auth' //* get token
-// isAuthenticated,
+import { logout, isAuthenticated } from '../lib/auth' //* get token
 import { getUserInfo } from '../lib/api.js'
 
 import logo from '../assets/logo.svg'
@@ -14,10 +13,9 @@ import basket from '../assets/basket.svg'
 
 
 function Nav() {
-  // let isLoggedIn = isAuthenticated()
   const { pathname } = useLocation()
   const history = useHistory()
-  // const isLoggedIn = isAuthenticated()
+  const isLoggedIn = isAuthenticated()
   const [category, setCategory] = React.useState('')
   const [searchCriteria, setSearchCriteria] = React.useState('')
   const [categoryWidth, setCategoryWidth] = React.useState(50)
@@ -31,6 +29,7 @@ function Nav() {
 
 
   React.useEffect(() => {
+    if (!isLoggedIn) return
     const getData = async () => {
       try {
         const { data } = await getUserInfo()
@@ -61,7 +60,6 @@ function Nav() {
     // window.location.reload()
   }
 
-  // const username = 'Pokebros'
 
   const handleSelect = e =>{
     resizeCategoryWidth(e)
@@ -91,9 +89,6 @@ function Nav() {
       else if (letter === '&') textLength  -= 7
       else textLength += 9
     })
-
-    
-  
     setCategoryWidth(textLength + 30) 
   }
   //* this function resizes select's width
@@ -151,7 +146,7 @@ function Nav() {
       </div>
       <div className="user_nav">
         {
-          !userData ? 
+          !isLoggedIn ? 
             <>
               <Link to="/pokeregister">
                 <button>
@@ -168,27 +163,18 @@ function Nav() {
             :
             <>
               <div className="profile_wrapper">
-            
-                {userData ?
-                  <>
-                    <div className="user_greeting">
-                      Hello {userData.username}!
-                    </div>  
-                    <div className="profile_image" onClick={openUserMenu}>
-                      <img src={userData.image} alt="user profile image" />
-                    </div> 
-                    <div onMouseLeave={()=>setuserMenuDisplay(false)} className={`user_menu ${userMenuDisplay && 'display'}`}>
-                      <button onClick={handleLogout} >
-                        <img src={pokeballGrey} alt="pokeball" />
-                  Log out
-                      </button>  
-                    </div>
-                  </>
-                  :
-                  <p>error</p>
-              
-                }
-                
+                <div className="user_greeting">
+                  Hello {userData.username}!
+                </div>  
+                <div className="profile_image" onClick={openUserMenu}>
+                  <img src={userData.image} alt="user profile image" />
+                </div> 
+                <div onMouseLeave={()=>setuserMenuDisplay(false)} className={`user_menu ${userMenuDisplay && 'display'}`}>
+                  <button onClick={handleLogout} >
+                    <img src={pokeballGrey} alt="pokeball" />
+                      Log out
+                  </button>  
+                </div>   
               </div>
             </>
         }

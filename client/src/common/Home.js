@@ -26,7 +26,7 @@ function Home() {
     const getData = async () => {
       try {
         const { data } = await getItems()
-        setItems(data)
+        setItems(data.sort((a, b) => a.price - b.price))
         setRandomItems(makeRandomArray(data))
         setRandomPokeball(pickRandomItem(data,'pokeballs'))
         setRandomBerry(pickRandomItem(data,'berries & apricorns'))
@@ -122,21 +122,6 @@ function Home() {
     // setSlideIsAuto(false)
   }
   
-
-  
-
-  //! this may not be required
-
-  let filteredItems = null
-  
-  React.useEffect(() => {
-    if (items){
-      // filteredItems = items.sort(dynamicSort('name'))
-      filteredItems = items.sort((a, b) => a.price - b.price)
-      console.log('fil',filteredItems)
-      
-    }
-  }, [items])
 
   //! sort based on price
   // if (items) console.log(filterItems(items).sort((a, b) => a.price - b.price))
