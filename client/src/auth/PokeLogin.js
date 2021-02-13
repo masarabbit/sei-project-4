@@ -29,7 +29,6 @@ function PokeLogin() {
 
   const handleSubmit = async e => { 
     e.preventDefault()
-    // console.log('etarget',e.target)
 
     try {
       const { data } = await loginUser(formdata)
@@ -68,8 +67,6 @@ function PokeLogin() {
         e.target.classList.remove('shake') 
       },500)
     }
-
-    console.log('submitting', formdata)
   }
 
   function loginUser(formdata) {

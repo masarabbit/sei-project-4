@@ -7,7 +7,6 @@ import logo from '../assets/logo.svg'
 import searchIcon from '../assets/search_icon.svg'
 import pokeballGrey from '../assets/pokeball_grey.svg'
 import pikaFace from '../assets/pika_face_icon.svg'
-// import testProfile from  '../assets/test_profile_image.jpg'
 import pokeballOrange from '../assets/pokeball_orange.svg'
 import basket from '../assets/basket.svg'
 
@@ -23,41 +22,25 @@ function Nav() {
   const [userMenuDisplay, setuserMenuDisplay] = React.useState(false)
   const [userData, setUserData] = React.useState(null)
   
-  // React.useEffect(()=>{ 
-  //   isLoggedIn = isAuthenticated()
-  // },[pathname])
-
-
   React.useEffect(() => {
     if (!isLoggedIn) return
     const getData = async () => {
       try {
         const { data } = await getUserInfo()
-        // console.log()
         setUserData(data)
-
-        // console.log('pokedexselected:', selected)
-        // console.log('pokedexitems:', items)
       } catch (err) {
-        // setHasError(true)
         console.log(err)
       }
     }
     getData()
   }, [pathname])
   
-  if (userData) console.log('user_data',userData)
-
-  // React.useEffect(() => {
-  //   if (userData) setUserData(null)
-  // }, [userData])  
   
   const handleLogout = () => {
     logout()
     history.push('/pokelogin')
     setUserData(null)
     setuserMenuDisplay(false)
-    // window.location.reload()
   }
 
 
@@ -78,7 +61,6 @@ function Nav() {
     const chosenCategory = category ? category.toLowerCase() : 'all'
     const chosenSearchCriteria = searchCriteria ? searchCriteria.toLowerCase() : '0'
     history.push(`/pokeindex/${chosenCategory}/${chosenSearchCriteria}/1`) 
-    // window.location.reload()
   }
 
   const resizeCategoryWidth = e => {
@@ -94,7 +76,6 @@ function Nav() {
   //* this function resizes select's width
   
   function openUserMenu() {
-    console.log('test')
     setuserMenuDisplay(!userMenuDisplay)
   }
 
@@ -146,7 +127,7 @@ function Nav() {
       </div>
       <div className="user_nav">
         {
-          !isLoggedIn ? 
+          !isLoggedIn || !userData ? 
             <>
               <Link to="/pokeregister">
                 <button>
@@ -164,7 +145,7 @@ function Nav() {
             <>
               <div className="profile_wrapper">
                 <div className="user_greeting">
-                  Hello {userData.username}!
+                      Hello {userData.username}!
                 </div>  
                 <div className="profile_image" onClick={openUserMenu}>
                   <img src={userData.image} alt="user profile image" />
@@ -172,9 +153,9 @@ function Nav() {
                 <div onMouseLeave={()=>setuserMenuDisplay(false)} className={`user_menu ${userMenuDisplay && 'display'}`}>
                   <button onClick={handleLogout} >
                     <img src={pokeballGrey} alt="pokeball" />
-                      Log out
+                          Log out
                   </button>  
-                </div>   
+                </div>
               </div>
             </>
         }

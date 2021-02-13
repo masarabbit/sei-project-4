@@ -123,6 +123,21 @@ function Home() {
   }
   
 
+  
+
+  //! this may not be required
+
+  // let filteredItems = null
+  
+  // React.useEffect(() => {
+  //   if (items){
+  //     // filteredItems = items.sort(dynamicSort('name'))
+  //     filteredItems = items.sort((a, b) => a.price - b.price)
+  //     console.log('fil',filteredItems)
+      
+  //   }
+  // }, [items])
+
   //! sort based on price
   // if (items) console.log(filterItems(items).sort((a, b) => a.price - b.price))
 
