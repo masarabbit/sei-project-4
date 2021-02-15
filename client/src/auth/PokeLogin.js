@@ -42,7 +42,7 @@ function PokeLogin() {
         },500)
 
         console.log(data.message)
-        setError(`The Information you provided is incorrect. You have ${numberOfAttempts} attempt(s) remaining`) 
+        setError(`The information you provided is incorrect. You have ${numberOfAttempts} attempt(s) remaining`) 
         if (numberOfAttempts === 0 ) setRanOutOfAttempts(true)
         setNumberOfAttempts(numberOfAttempts - 1)
         return 
@@ -127,7 +127,7 @@ function PokeLogin() {
     <section className="page_wrapper">
       {ranOutOfAttempts ? 
         <MarchampSecurity 
-          message='As a Security Precaution, you are blocked.'
+          message='As a security precaution, you are blocked.'
           link='/'
           buttonText='Home'
         />

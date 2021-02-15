@@ -10,7 +10,6 @@ const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
 // 
 function ImageUploadField( { value, name, onChange } ) {
-  const [ hover, setHover] = React.useState(false)
   const handleUpload = async e => {
     const data = new FormData()  
     data.append('file', e.target.files[0])
@@ -19,12 +18,6 @@ function ImageUploadField( { value, name, onChange } ) {
     onChange({ target: { name, value: res.data.url } }) //* handleChange triggered
   }
   
-  const handleHover = () =>{
-    setHover(!hover)
-  }
-
-
-
   return (
     <>
       <div className="profile_preview">
@@ -33,8 +26,8 @@ function ImageUploadField( { value, name, onChange } ) {
         </div>
       </div>
       <div className="upload_button_wrapper">
-        <div className="input_wrapper" onMouseEnter={handleHover} onMouseLeave={handleHover}>
-          <label className={`upload_button ${hover ? 'hover' : ''}`} htmlFor="upload" > 
+        <div className="input_wrapper">
+          <label className="upload_button" htmlFor="upload" > 
             <img src="../assets/pokeball_orange.svg" alt="pokeball" /> 
               Upload Your Own Image
           </label>

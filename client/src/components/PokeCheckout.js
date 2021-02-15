@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/PokeCheckout.scss'
+// import '../styles/PokeCheckout.scss'
 import { useLocation } from 'react-router-dom'
 
 

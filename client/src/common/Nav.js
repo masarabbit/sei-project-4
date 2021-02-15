@@ -57,7 +57,6 @@ function Nav() {
   
   const handleSubmit = e =>{
     e.preventDefault()
-    // if (!searchCriteria) return
     const chosenCategory = category ? category.toLowerCase() : 'all'
     const chosenSearchCriteria = searchCriteria ? searchCriteria.toLowerCase() : '0'
     history.push(`/pokeindex/${chosenCategory}/${chosenSearchCriteria}/1`) 
@@ -153,7 +152,7 @@ function Nav() {
                 <div onMouseLeave={()=>setuserMenuDisplay(false)} className={`user_menu ${userMenuDisplay && 'display'}`}>
                   <button onClick={handleLogout} >
                     <img src={pokeballGrey} alt="pokeball" />
-                          Log out
+                          Log Out
                   </button>  
                 </div>
               </div>

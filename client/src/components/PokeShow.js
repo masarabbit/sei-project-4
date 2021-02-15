@@ -235,7 +235,7 @@ function PokeShow() {
                 { notLoggedIn ? <p className="blue">! Login to add to basket</p> : null}
                 <div className="button_wrapper">
                   <button>
-                    <img src="../assets/pokeball_orange.svg" alt="pokeball" /> Add to basket
+                    <img src="../assets/pokeball_orange.svg" alt="pokeball" /> Add to Basket
                   </button>
                 </div>  
 
@@ -304,7 +304,7 @@ function PokeShow() {
             :
             <section className="page_wrapper">
               <SlowPokeErrorCard 
-                errorMessage='hmm... server may be down...'
+                errorMessage="Hmm... something&#39;s gone wrong..."
               />
             </section>
         }

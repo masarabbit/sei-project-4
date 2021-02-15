@@ -242,7 +242,6 @@
 } 
 
 .inside {
-  // position: absolute;
   float: left;
   width: 0%;
   height: 50px;
@@ -269,6 +268,6 @@
 //* background animation
 
 @keyframes bg_scrolling {
-  0% { background-position: 0 50px; }
-  100% { background-position: 50px 0; }
+  0% { background-position: 0 100px; }
+  100% { background-position: 100px 0; }
 }

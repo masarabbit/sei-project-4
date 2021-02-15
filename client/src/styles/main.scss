@@ -1,5 +1,6 @@
 @import 'animation';
-
+@import 'pokecheckout';
+@import 'pokepayment';
 
 $dark_color:  #1f1f1f;
 $light_color: rgb(255, 255, 255);
@@ -134,7 +135,7 @@ body {
   font-family: $main_font;
   background-color: $light_color;
   background: url($bg) repeat 0 0;
-  animation: bg_scrolling 4s infinite linear; 
+  animation: bg_scrolling 8s infinite linear; 
 }
 
 .default_box_style {
@@ -602,6 +603,8 @@ body {
       margin: 0 2px 0 10px;
       width: auto;
     }
+
+
   }
 
   // margin: 20px 0 0 20px;
@@ -621,6 +624,20 @@ body {
 
   .stock {
     margin: 8px 0 0 0;
+
+    input {
+      border-radius: 8px;
+      border: 0;
+      padding: 10px 0;
+      font-size: 17px;
+      margin: 0 10px;
+      font-family: $main_font;
+      color: $dark_color;
+      background-color: $input_background_color;
+      text-align: center;
+      width: 50px;
+    }
+
   }
 
   .info{
@@ -752,6 +769,12 @@ body {
       margin-right: 1px;
     }
   }
+
+  div:nth-child(4) {
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    color: $dark_orange;
+  } 
 }
 
 img.staryu {
@@ -926,7 +949,6 @@ img.staryu {
       color: $dark_color;
       background-color: $input_background_color;
       text-align: center;
-
     }
 
   }
@@ -1077,7 +1099,18 @@ img.staryu {
     }
 }
 
-.upload_button.hover{
+// .upload_button.hover{
+//   border: 1px solid rgba(243, 146, 18, 0.671);
+//   background-color: rgba(243, 146, 18, 0.671);
+//   color: white;
+//   img {
+//     position: relative;
+//     filter: brightness(500%) contrast(200%);
+//     animation: rotating infinite linear 0.6s;
+//   }
+// }
+
+.upload_button:hover{
   border: 1px solid rgba(243, 146, 18, 0.671);
   background-color: rgba(243, 146, 18, 0.671);
   color: white;

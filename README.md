@@ -229,7 +229,7 @@ The search bar is made up of three main components - select option (the drop dow
           >
             <option value="All">All</option>
 
-             (... options listed here ...)
+             //* ... options listed here ...
 
             <option value="Jewels">Jewels</option>
           </select>  
@@ -308,6 +308,499 @@ The silhouette of Pikachu for the login has a similar keyframe, without the `tra
   100% {bottom: 0; transform: scale(1);}
 }
 ```
+<p align="center">
+	  <img src="README_images/hover_effect.gif" alt="hover effects" />
+</p>
+
+### Login State
+
+When user is logged in, the register and login button is replaced with the user icon, which can be hovered to display the log out button. 
+
+
+<p align="center">
+	  <img src="README_images/logout.gif" alt="nav bar changes when user logs out" />
+</p>
+
+
+The 'isAuthenticated' function below checks if user is logged in or not by checking the validity of the token placed on the browser's local storage. The function is used to set the variable 'isloggedIn', used to conditionally render elements on the Nav bar.
+
+```
+export function isAuthenticated() {
+  const payload = getPayload()
+  if (!payload) return false 
+  const now = Math.round(Date.now() / 1000) 
+  return now < payload.exp
+}
+```
+
+## Displaying Items Based on Search Bar Query
+
+When users type in the search criteria in the input field, it is set to state as the 'searchCriteria'. The category selected in the dropdown field is also set to state as the 'category' variable. These are passed on to the url when the user clicks on the on the search icon (magnifying glass icon), using the function below. If no category is chosen, the 'chosenCategory' is set to 'all', and 'chosenSearchCriteria is set to '0' if none is specified. User is taken to the new url using the 'useHistory' hook imported from 'react-router-dom'.
+
+  const handleSubmit = e =>{
+    e.preventDefault()
+    const chosenCategory = category ? category.toLowerCase() : 'all'
+    const chosenSearchCriteria = searchCriteria ? searchCriteria.toLowerCase() : '0'
+    history.push(`/pokeindex/${chosenCategory}/${chosenSearchCriteria}/1`) 
+  }
+
+In the example below, user is taken to `https://pokezonshop.herokuapp.com/pokeindex/pokeballs/ultra/1` since they selected 'Pokeballs' in the dropdown and typed 'ultra' in the input field. 
+
+
+<p align="center">
+	  <img src="README_images/search_index.png" alt="search result shown for 'ultra' within 'pokeballs'" />
+</p>
+
+The search query in the url is accessed using the 'useParams' hook imported from 'react-router-dom', which is used for the filter function below:
+
+```
+  const filterItems = (items)=> {
+    if (category === 'all' && searchCriteria === '0') return items
+    let result = items
+    result = category === 'all' ? result : result.filter(item => item.category === category )
+    result = searchCriteria === '0' ? result : result.filter(item => item.name.includes(searchCriteria))
+    return result
+  }
+```
+Due to time constraint, the filter only checks the item's category and item's name. There is room to enhance this feature by having the filter also check through other fields, such as user comments and item description.
+
+### Pagination
+
+The number of items shown on each page were controlled by slicing the items array before mapping them onto the page. This was controlled using the following variable (the 'page' variable also makes use of the 'useParams' hook).
+
+```
+const { page } = useParams()
+const itemToDisplay = 12
+const firstItem = (page - 1) * itemToDisplay
+```
+
+Using the variables above, the relevant part of the items array is sliced. For example, page one would have first 12, page two will have second set of 12 and so on. in other words, 'slicedItems' is equal to `items.slice(0, 12)` on page one, and equal to `items.slice(12, 24)` on page two. 
+
+```
+if (items) {
+  slicedItems = items.slice(firstItem, page * itemToDisplay)
+}
+```
+
+When the user navigates to a page by clicking on the page number or the arrow button,  the page number in the url changes, which in turn changes which section of the item array is sliced.
+
+```
+function prevPage(){
+  history.push(`/${Number(page) - 1}`)
+}
+
+function nextPage(){
+  history.push(`/${Number(page) + 1}`)
+}
+
+function goToPage(pageNo){
+  if (pageNo === '...' || pageNo === '...+' ) return
+  history.push(`/${pageNo}`)
+}
+```
+
+The buttons for navigating the page is mappped onto the bottom of the page, referencing the current page number and maximum page number. This is done by first creating an array to be map out, using the switch statement below. For example, if the user is on page five, and there are 10 pages to display, the page array would be `['1','...','...','4','5','6','...+','10']`. 'Set' is used to remove any excess buttons in the page array ('...+' was used along side '...' so that it isn't seen as a duplication). For the example array mentioned earlier, the array would become `['1','...','4','5','6','...+','10']` once the duplicates are removed. The idea is, only page one, max page, current page, page before current and page after current is displayed. All other pages are abbreviated (otherwise, if you had 40 pages there would be 40 buttons, which would clutter the navigation).
+
+
+```
+function mapPageLinks(maxvalue){
+  const pages = []
+
+  for (let i = 1; i <= maxvalue; i++ ){
+    switch (i) {
+      case 1: pages.push(i)
+        break
+      case Number(page): pages.push(i)
+        break    
+      case (Number(page) - 1): 
+        pages.push(i)
+        break
+      case (Number(page) + 1): 
+        pages.push(i)
+        break  
+      case maxvalue - 1: 
+        pages.push('...+')
+        break  
+      case maxvalue: pages.push(i)
+        break
+      default: pages.push('...')
+    }
+  } 
+  
+  const buttonsToDisplay =  [...new Set(pages)]
+  
+  return buttonsToDisplay.map(eachPage=>{
+    return (
+      <button className={`page_button ${eachPage === Number(page) ? 'current' : ''} ${eachPage[0] === '.' ? 'null' : ''}`} key={`page${eachPage}` } alt="button" onClick={()=>{
+        goToPage(eachPage)
+      }}>{eachPage === '...+' ? '...' : eachPage}</button>
+    )
+  })
+}
+
+```
+
+Once the page array is created, they are mapped onto the page, and each buttons are assigned their own 'onClick' event to trigger the 'goToPage' function mentioned earlier. The buttons are also styled according to what they are:
+  * The div is given the "current" class to highlight current page (eg if user is on page two, div with no.2 would have class of "current" to be styled differently)
+  * style called 'null' is used to clarify that the button does nothing (it has no hover effect, and cursor is set to default.)
+
+In the screenshot below, the user is on page four. Based on the filtered result, the final page is seven.
+
+<p align="center">
+	  <img src="README_images/pagination.png" alt="page links" />
+</p>
+
+The prev button is hidden when on first page, and the next button is hidden when on final page using conditional rendering.
+
+<p align="center">
+	  <img src="README_images/page_one.png" alt="prev button hidden on page one" />
+</p>
+
+<p align="center">
+	  <img src="README_images/page_seven.png" alt="next button hidden on final page" />
+</p>
+
+## Home Screen
+
+I also worked on the home page, which consisted of two sections: the carousel banner, and divs displaying random items.
+
+### Carousel Banner
+
+The carousel is essentially a wide div wrapped within a wrapper div. The position of the wide div is adjusted using inline styling, which references a variable called 'heropos'. This variable is altered using a function which is called every 4.5 seconds using `setTimeout`.
+
+```
+  <div className="home_hero_wrapper">
+    <div className="left_arrow"  onClick={prevHero}>
+      <img className="left" src={leftArrow} alt="left arrow" />
+    </div>  
+    <div className="inner_wrapper">
+      
+      <div className="hero" style = {{ left: `${heroPos}%` }}>
+        <img
+          src="../assets/pokezon.png" 
+          alt="pokezon hero image"
+        />  
+      </div>
+
+      <div className="hero" style = {{ left: `${heroPos}%` }}>
+        <img
+          src="../assets/catch.png" 
+          alt="Catch pokemon with Master ball"
+        />  
+      </div>
+
+      <div className="hero" style = {{ left: `${heroPos}%` }}>
+        <img
+          src="../assets/prime.png" 
+          alt="Pokezon prime coming soon"
+        />  
+      </div>
+
+        //* ... three more divs similar to above with different images ... 
+  
+    <div className="right_arrow" onClick={nextHero}>
+      <img className="right" src={rightArrow} alt="right arrow" />
+    </div> 
+  </div>
+
+```
+
+The User is able to interrupt the `setTimeout` and manual toggle the carousel by clicking the left and right arrow button. The function for toggling the carousel clears any ongoing `setTimeout` using `clearTimeout`.
+
+```
+ const nextHero = () =>{ 
+    clearTimeout(timer)
+    const newPos = heroPos > -400 ? heroPos - 100 : 0
+    setHeroPos(newPos)
+  }
+
+  const prevHero = () =>{
+    clearTimeout(timer)
+    const newPos = heroPos < 0 ? heroPos + 100 : -400
+    setHeroPos(newPos)
+  }
+```  
+
+After the carousel is toggled, it carries on with the cycle since the change to 'heropos' variable would trigger a useEffect, which sets a new  `setTimeout `. The useEffect also has a cleanup function to clear any ongoing `setTimeout` when user navigates away from the page.
+
+```
+  React.useEffect(() => {
+    timer = setTimeout(()=>{
+      nextHero()
+    }, 4500)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [heroPos])
+```
+
+<p align="center">
+	  <img src="README_images/carousel.gif" width="500"  alt="carousel banner" />
+</p>
+
+Using a ternary operator, the carousel returns to the first image when it reaches the final one ( it toggles to the final image if you click on the left arrow when on first image as well).
+
+### Randomly Picked Items
+
+When the data is fetched from the API, random item is picked based on several criteria, then set to state.
+
+```
+  React.useEffect(() => {
+    const getData = async () => {
+      try {
+        const { data } = await getItems()
+        setItems(data.sort((a, b) => a.price - b.price))
+        setRandomItems(makeRandomArray(data))
+        setRandomPokeball(pickRandomItem(data,'pokeballs'))
+        setRandomBerry(pickRandomItem(data,'berries & apricorns'))
+        setRandomCheapItem(pickRandomCheapItem(data))
+      } catch (err) {
+        setHasError(true)
+      }
+    }
+    getData()
+    nextHero()
+  }, [])
+  ```
+
+The random selection is made using functions below. 'pickRandomCheapItem' filters out 'berries & appricorn', and makeRandomArray filters out 'pokeballs' as well as 'berries & appricorn', so reduce the change of similar items appearing of the page (since many of the pokeballs and berries are also cheap, they are also likely to appear as random cheap item unless they are filtered). 
+
+
+```
+ function pickRandomItem(array,category){
+    const filteredArray = array.filter(item=>{
+      return item.category === category
+    })
+    return filteredArray[Math.floor(Math.random() * filteredArray.length)]
+  }
+
+  function pickRandomCheapItem(array){
+    const filteredArray = array.filter(item=>{
+      return item.category !== 'berries & apricorns' && item.price < 200
+    })
+    return filteredArray[Math.floor(Math.random() * filteredArray.length)]
+  }
+
+  function makeRandomArray(array){
+    const randomItems = []
+    const filteredArray = array.filter(item=>{
+      return item.category !== 'pokeballs' && item.category !== 'berries & apricorns'
+    })
+    for (let i = 0 ; i < 4; i++){
+      randomItems.push(filteredArray[Math.floor(Math.random() * filteredArray.length)])
+    }
+    return randomItems
+  }
+
+```
+
+
+The filtered arrays are then mapped onto the page. Users will see a different selection each time they visit the home page.
+
+<p align="center">
+	  <img src="README_images/random_pick_one.png" width="500"  alt="random pick item example one" />
+</p>
+
+<p align="center">
+	  <img src="README_images/random_pick_two.png" width="500"  alt="random pick item example two" />
+</p>
+
+<p align="center">
+	  <img src="README_images/random_pick_three.png" width="500"  alt="random pick item example three" />
+</p>
+<br />
+
+## Animated Components
+
+I made number of other animated components dotted around the website.
+### Loading Screen
+
+<p align="center">
+	  <img src="README_images/pikachu_loading.gif" width="500"  alt="loading bar with running Pikachu" />
+</p>
+
+This component displays a loading bar, with Pikachu running above it. 
+```
+import React from 'react'
+import pika from '../assets/pika_anim.gif'
+
+
+function PikachuLoadingScreen(){
+
+  return (
+    <div className="center_box">
+      <div className="bar">
+        <div className="inside"></div>
+      </div>
+      <img className="pika" src={pika} alt="pikachu" />
+    </div> 
+  )
+}
+
+export default PikachuLoadingScreen
+
+```
+The bar and Pikachu is animated using two separate css keyframe animations below:
+
+
+```
+.inside {
+  float: left;
+  width: 0%;
+  height: 50px;
+  background-color: rgb(255, 204, 93);
+  transition: 1s;
+  animation: bar_load forwards 1s; 
+}
+
+@keyframes bar_load {
+  0%{ width: 0%;}
+  100%{ width: 100%;}
+}
+
+.pika {
+  animation: pika_load forwards 1s; 
+}
+
+@keyframes pika_load {
+  0%{ left: 0%;}
+  100%{ left: calc(100% - 100px);}
+}
+
+```
+
+<br/>
+
+### Moving Background
+
+<p align="center">
+	  <img src="README_images/background.gif" alt="loading bar with running Pikachu" />
+</p>
+
+The background is tiled, and scrolls to upper right slowly. This effect is created by applying keyframe animation to the `background-position`, which is applied to the body.
+
+
+```
+body {
+  padding: 0;
+  margin: 0;
+  font-family: $main_font;
+  background-color: $light_color;
+  background: url($bg) repeat 0 0;
+  animation: bg_scrolling 8s infinite linear; 
+}
+
+```
+
+```
+@keyframes bg_scrolling {
+  0% { background-position: 0 100px; }
+  100% { background-position: 100px 0; }
+}
+```
+
+
+### Other Animated Pokémon
+
+I placed number of other animated images around the website, several for error messaages. They would be displayed on situations such as when the server is down, or when users are not logged in. I drew the svg files on Illustrator, then animated them using css keyframe animation.
+
+<p align="center">
+	  <img src="README_images/marchamp.gif" width="500"  alt="error message featuring Marchamp" />
+</p>
+
+<p align="center">
+	  <img src="README_images/slowpoke.gif" width="500"  alt="error message featuring Slowpoke" />
+</p>
+
+<p align="center">
+	  <img src="README_images/ditto.gif" width="500"  alt="error message featuring Ditto" />
+</p>
+
+Most work went into animating Eevee, which had separate motion for the ears, the head, and tail. It would pop out from behind the desk to greet the user.
+
+<p align="center">
+	  <img src="README_images/eevee.gif" width="500"  alt="Eevee receptionist" />
+</p>
+
+<br/>
+
+
+## User Registration and Login Forms
+
+### Registration
+
+Backend and error handling were built by Christian. Whilst majority of the error handling, such as validating emails and password were handled in the frontend, some error handling were done in the backend (such as checking uniqueness of the username, which had to be done by referring to existing names in the database.) I worked on the styling and the functionality to upload profile image onto the server. 
+
+By clicking on the upload button, the user is able to select an image, which gets uploaded to Cloudinary. Once the image is uploaded, the url of the image is requested from Cloudinary and set into state. Once set to state, an image preview is displayed, and the image url is ready to be uploaded to the user database along with rest of the form fields.
+
+<p align="center">
+	  <img src="README_images/image_upload.png" width="500"  alt="profile image upload" />
+</p>
+
+<p align="center">
+	  <img src="README_images/image_upload_two.png" width="500"  alt="profile image uploaded" />
+</p>
+
+Styling the form was relatively straight forward, but tricky for this image upload. This is because it involved hiding the default browser input, then overwriting it with a custom label. A label was placed with `htmlFor` to act on behalf the actual input field. 
+
+```
+ <div className="upload_button_wrapper">
+    <div className="input_wrapper">
+      <label className="upload_button" htmlFor="upload" > 
+        <img src="../assets/pokeball_orange.svg" alt="pokeball" /> 
+          Upload Your Own Image
+      </label>
+      <input
+        id="upload"
+        type="file"
+        accept="jpg"
+        onChange={handleUpload}
+        name={name}
+      />
+    </div>  
+  </div>
+```
+
+<br/>
+
+### Form Animation
+
+The form has separate animation depending on if the submission was succssful or not.
+
+When there is error on the form, for example when the field is entered incorrectly, the form shakes along with error message(s) being displayed. This is done by adding a class to the form with a keyframe animation which alters the `margin-left` repeatedly.
+
+<p align="center">
+	  <img src="README_images/login_fail.gif" width="500"  alt="login fail" />
+</p>
+
+```
+@keyframes shake {
+  0% { margin-left: -10px;}
+  50% { margin-left: 10px;}
+  100% { margin-left: -10px;}
+}
+```
+
+When the form submission is successful, a class is added which animates using `transform: scale` and `margin-top`, which makes the form shoot upwards.
+
+<p align="center">
+	  <img src="README_images/accepted.gif" width="500"  alt="form accepted" />
+</p>
+
+```
+
+This keyframe animation is also used when user adds an item in the shopping basket.
+
+@keyframes accepted_effect {
+  0% { transform: scale(1) ; margin-top: 0;}
+  70% { transform: scale(1.2,0.8); margin-top: 10vh; }
+  80% { transform: scale(0.9,1.1); margin-top: -10vh; }
+  100% { transform: scale(1) ;  margin-top: -200vh;}
+}
+```
+
+
+
 
 ## Final Thoughts
 

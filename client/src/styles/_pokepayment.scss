@@ -1,0 +1,91 @@
+$main_font: 'Roboto', sans-serif;
+$orange: #ffc200;
+$amazon_orange: #ff9900;
+$input_background_color: rgb(252, 245, 235);
+
+html {
+  scroll-behavior: smooth;
+}
+
+#root {
+  overflow-x: hidden;
+}
+
+
+h2 {
+  font-family: $main_font;
+  color: rgb(255, 118, 6);
+  margin: 1rem;
+}
+
+.selectPokePayment {
+  border-radius: 8px;
+  // border: 1px solid orange;
+  border: 0;
+  height: 35px;
+  padding: 0px 10px;
+  font-size: 15px;
+  margin: 5px 5px 0;
+  // color: black;
+  color: #ffc588;
+  background-color: $input_background_color;
+  transition: 0.2s;
+  cursor: pointer;
+  font-family: $main_font;
+}
+
+.arrow {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  padding: 0px 25px 0 10px;
+  background-image:
+      linear-gradient(45deg, transparent 50%, #ffc588 50%),
+      linear-gradient(135deg, #ffc588 50%, transparent 50%);
+      background-position:
+        calc(100% - 13px) calc(1em + 1px),
+        calc(100% - 8px) calc(1em + 1px),
+        calc(100% - 2.5em) 0.5em;
+      background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+      background-repeat: no-repeat;
+      cursor: pointer;
+}
+
+.arrow:focus {
+  outline: none !important;
+  box-shadow: 0 0 8px $amazon_orange;
+}
+
+.selectPokePayment.selected {
+  color: black;
+}
+
+.capitalized {
+  text-transform: capitalize;
+  // color: $amazon_orange;
+}
+
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }
+
+// #color1:focus {
+//   color: #0598b3;
+// }
+
+.scrolling-box {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.isDisabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: currentColor;
+  opacity: 0.5;
+  text-decoration: none;
+}

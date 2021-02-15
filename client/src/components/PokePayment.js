@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { headers } from '../lib/api'
-import '../styles/PokePayment.scss'
+// import '../styles/PokePayment.scss'
 import { Link, useHistory } from 'react-router-dom'
 
 function PokePayment() {
@@ -218,9 +218,8 @@ function PokePayment() {
                 <label>Expiry Date (MM YYYY)</label>
                 <div style={{ display: 'flex' }}>
                   <select name="month" 
-                    className="selectPokePayment"
+                    className="selectPokePayment arrow"
                     required 
-                    id="color2"
                     onChange={(e)=>{
                       handleValidation(e)
                       handleSelect(e)
@@ -244,12 +243,11 @@ function PokePayment() {
                   </select><div>{monthValid === '' ? null : monthValid ? null : <p style={{ margin: '5px 0' }}>select a month</p>}</div>
                   <select name="year" 
                     required 
-                    id="color2"
                     onChange={(e)=>{
                       handleValidation(e)
                       handleSelect(e)
                     }}
-                    className="selectPokePayment"
+                    className="selectPokePayment arrow"
                   >
                     <input name="chrome-autofill" style={{ display: 'none' }} disabled/>
                     <input name="chrome-autofill" style={{ display: 'none' }} disabled/>
@@ -299,8 +297,7 @@ function PokePayment() {
                 <input name="chrome-autofill" style={{ display: 'none' }} disabled/>
                 <input name="chrome-autofill" style={{ display: 'none' }} disabled/>
                 <select
-                  id="color2"
-                  className="selectPokePayment"
+                  className="selectPokePayment arrow"
                   required
                   onChange={(e)=>{
                     handleValidation(e)

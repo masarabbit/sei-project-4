@@ -21,7 +21,7 @@ function Home() {
   const [randomCheapItem, setRandomCheapItem] = React.useState({})
 
   
-  let interval = null
+  let timer = null
   React.useEffect(() => {
     const getData = async () => {
       try {
@@ -38,11 +38,7 @@ function Home() {
       }
     }
     getData()
-    interval = setInterval(() => {
-      nextHero()
-    }, 2000)
-    return () => clearInterval(interval)
-    
+    nextHero()
   }, [])
   
   function pickRandomItem(array,category){
@@ -94,8 +90,7 @@ function Home() {
   function mapOneItem(item){
     return ( 
       <Link to={`/pokeshow/${item._id}`} key={item.name}>
-        <div className="single_wrapper" >
-          
+        <div className="single_wrapper" >      
           <img className="pulse" src={item.image} alt={item.name} />
           <p>{item.name} <img src={pokeDollar} alt="pokedollar sign" />{item.price}</p>
         </div>  
@@ -103,43 +98,31 @@ function Home() {
     )
   }
 
-  // if (randomItems) console.log('r',randomItems[0])
 
 
   const nextHero = () =>{ 
-    clearInterval(interval)
-    const  newPos = heroPos > -400 ? heroPos - 100 : 0
-    // console.log('page',newPos)
+    clearTimeout(timer)
+    // console.log('interval next', interval)
+    // console.log('heropos',heroPos)
+    const newPos = heroPos > -400 ? heroPos - 100 : 0
     setHeroPos(newPos)
-   
-    // setSlideIsAuto(false)
   }
 
   const prevHero = () =>{
-    clearInterval(interval)
+    clearTimeout(timer)
     const newPos = heroPos < 0 ? heroPos + 100 : -400
     setHeroPos(newPos)
-    // setSlideIsAuto(false)
   }
   
+  React.useEffect(() => {
+    timer = setTimeout(()=>{
+      nextHero()
+    }, 4500)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [heroPos])
 
-  
-
-  //! this may not be required
-
-  // let filteredItems = null
-  
-  // React.useEffect(() => {
-  //   if (items){
-  //     // filteredItems = items.sort(dynamicSort('name'))
-  //     filteredItems = items.sort((a, b) => a.price - b.price)
-  //     console.log('fil',filteredItems)
-      
-  //   }
-  // }, [items])
-
-  //! sort based on price
-  // if (items) console.log(filterItems(items).sort((a, b) => a.price - b.price))
 
 
   return (
@@ -227,8 +210,6 @@ function Home() {
           </section>
           : 
           <PikachuLoadingScreen/>
-
-        
       }
     </>
   )

@@ -60,7 +60,7 @@ function PokeBasket() {
       return  (
         <section className="page_wrapper">
           <MarchampSecurity
-            message='Access Denied: Please Login to View the Basket'
+            message='Access denied: Please login to view the basket'
             link='/pokelogin'
             buttonText='Login'
           />
@@ -100,7 +100,6 @@ function PokeBasket() {
   const updateBasket = async e => {
     const itemIdToUpdate = e.target.dataset.item
     const itemId = e.target.name
-   
     const body = {
       quantity: itemQty,
       item: itemId
@@ -134,7 +133,7 @@ function PokeBasket() {
           <div className="button_wrapper flexend less_margin">
             <button onClick={clearBasketAddToRecentPurchases}>
               <img src="../assets/pokeball_orange.svg" alt="pokeball" />
-              Check Out
+              Checkout
             </button>
           </div>
           
@@ -168,7 +167,7 @@ function PokeBasket() {
               <div className="button_wrapper flexend">
                 <button data-item={product._id} onClick={handleBasketItemDelete}>
                   <img src="../assets/pokeball_orange.svg" alt="pokeball" />
-                  Remove from basket
+                  Remove From Basket
                 </button>
               </div>
             </div>
@@ -188,7 +187,7 @@ function PokeBasket() {
           <div className="button_wrapper flexend less_margin">
             <button onClick={()=>history.push('/pokepayment')}>
               <img src="../assets/pokeball_orange.svg" alt="pokeball" />
-              Check Out
+              Checkout
             </button>
             <button className="up" onClick={()=>{
               window.scrollTo(0, 0)

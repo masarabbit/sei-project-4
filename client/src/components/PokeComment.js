@@ -65,7 +65,7 @@ function PokeComment() {
       {notLoggedIn ? 
         <>
           <MarchampSecurity 
-            message='Access Denied: Please Login'
+            message='Access denied: Please login'
             link={`/pokeshow/${id}`}
             buttonText='Back'
           />
