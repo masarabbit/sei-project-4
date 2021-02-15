@@ -6,12 +6,26 @@
 * [Technologies Used](./README.md#technologies-used)
 * [Approach](./README.md#approach)
 	* [Mock Up](./README.md#mock-up)
-	* [Requesting Data from the API](./README.md#requesting-data-from-the-api)
-	* [Displaying Details of Individual Pokémon](./README.md#displaying-details-of-individual-pokémon)
-	* [Styling and Animation](./README.md#styling-animation)
-    * [Background](./README.md#background)
-    * [Hover Effects](./README.md#hover-effects)
-    * [Animation for Pokémon Entering the Page](./README.md#animation-for-pokémon-entering-the-page)
+	* [Setting up the Backend](./README.md#setting-up-the-backend)
+	* [Creating Seed Data for the Database](./README.md#creating-seed-data-for-the-database)
+	* [Nav Bar](./README.md#nav-bar)
+  * [Search Bar](./README.md#search-bar)
+  * [Hover Effects](./README.md#hover-effects)
+  * [Displaying Items Based on Search Bar Query](./README.md#displaying-items-based-on-search-bar-query)
+  * [Pagination](./README.md#pagination)
+  * [Home Screen](./README.md#home-screen)
+    * [Carousel](./README.md#carousel)
+    * [Randomly Picked Items](./README.md#login-state)
+  * [Animated Components](./README.md#animated-components)
+    * [Loading Screen](./README.md#loading-screen)
+    * [Moving Background](./README.md#moving-background)
+    * [Other Animated Pokémon](./README.md#loading-screen)
+  * [User Registration and Login Forms](./README.md#user-registration-and-login-forms)
+    * [Registration](./README.md#registration)
+    * [Form Animation](./README.md#form-animation)  
+* [Other Features](./README.md#other-features)
+    * [Comment](./README.md#comment
+    * [Purchasing Items](./README.md#purchasing-items)  
 * [Final Thoughts](./README.md#final-thoughts)
 	* [Wins and Challenges](./README.md#wins-and-challenges)
 	* [Key Learnings](./README.md#key-learnings)
@@ -29,7 +43,6 @@ For the third Project at General Assembly's Software Engineering Immersive Cours
 Since the Course was taken remotely, we communicated extensively through Slack, Zoom, Trello and GitHub. As well as gaining further coding experience, it was a great opportunity to get a taste of collaborative web development.
 
 We based our project on the popular online shopping platform, Amazon, but with a twist - the store would sell fictional products from the Pokémon game. Most of the assets and data comes from the original game, which had been collected and shared by Pokémon fan online - [Veekun](https://veekun.com) was an excellent resource. The data was recompiled and edited slightly to suit the concept of our project.
-
 
 <br/>
 
@@ -206,7 +219,7 @@ I was able to make a seed data for the user also using Google Sheets, using a si
 
 <br />
 
-## Nav Bar
+### Nav Bar
 
 The first component I worked on was the Nav bar. As with the original Amazon site, the Nav bar constantly, allowing the user to make a search at anytime. It also featured the main menu allowing users to register, login and logout, as well as access the shopping basket.
 
@@ -333,7 +346,7 @@ export function isAuthenticated() {
 }
 ```
 
-## Displaying Items Based on Search Bar Query
+### Displaying Items Based on Search Bar Query
 
 When users type in the search criteria in the input field, it is set to state as the 'searchCriteria'. The category selected in the dropdown field is also set to state as the 'category' variable. These are passed on to the url when the user clicks on the on the search icon (magnifying glass icon), using the function below. If no category is chosen, the 'chosenCategory' is set to 'all', and 'chosenSearchCriteria is set to '0' if none is specified. User is taken to the new url using the 'useHistory' hook imported from 'react-router-dom'.
 
@@ -460,11 +473,11 @@ The prev button is hidden when on first page, and the next button is hidden when
 	  <img src="README_images/page_seven.png" alt="next button hidden on final page" />
 </p>
 
-## Home Screen
+### Home Screen
 
 I also worked on the home page, which consisted of two sections: the carousel banner, and divs displaying random items.
 
-### Carousel Banner
+#### Carousel
 
 The carousel is essentially a wide div wrapped within a wrapper div. The position of the wide div is adjusted using inline styling, which references a variable called 'heropos'. This variable is altered using a function which is called every 4.5 seconds using `setTimeout`.
 
@@ -540,7 +553,7 @@ After the carousel is toggled, it carries on with the cycle since the change to 
 
 Using a ternary operator, the carousel returns to the first image when it reaches the final one ( it toggles to the final image if you click on the left arrow when on first image as well).
 
-### Randomly Picked Items
+#### Randomly Picked Items
 
 When the data is fetched from the API, random item is picked based on several criteria, then set to state.
 
@@ -610,10 +623,10 @@ The filtered arrays are then mapped onto the page. Users will see a different se
 </p>
 <br />
 
-## Animated Components
+### Animated Components
 
 I made number of other animated components dotted around the website.
-### Loading Screen
+#### Loading Screen
 
 <p align="center">
 	  <img src="README_images/pikachu_loading.gif" width="500"  alt="loading bar with running Pikachu" />
@@ -671,7 +684,7 @@ The bar and Pikachu is animated using two separate css keyframe animations below
 
 <br/>
 
-### Moving Background
+#### Moving Background
 
 <p align="center">
 	  <img src="README_images/background.gif" alt="loading bar with running Pikachu" />
@@ -700,7 +713,7 @@ body {
 ```
 
 
-### Other Animated Pokémon
+#### Other Animated Pokémon
 
 I placed number of other animated images around the website, several for error messaages. They would be displayed on situations such as when the server is down, or when users are not logged in. I drew the svg files on Illustrator, then animated them using css keyframe animation.
 
@@ -724,10 +737,20 @@ Most work went into animating Eevee, which had separate motion for the ears, the
 
 <br/>
 
+##### Random Stayus
 
-## User Registration and Login Forms
+Stars are displayed around the website to show item's rating. When the ratings are mapped onto the page, there is one in 60 chance that a Stayu (starfish Pokémon) is displayed instead. These are also subtly animated.
 
-### Registration
+<p align="center">
+	  <img src="README_images/stayu.png" width="500"  alt="random Staryus" />
+</p>
+
+<br/>
+
+
+### User Registration and Login Forms
+
+#### Registration
 
 Backend and error handling were built by Christian. Whilst majority of the error handling, such as validating emails and password were handled in the frontend, some error handling were done in the backend (such as checking uniqueness of the username, which had to be done by referring to existing names in the database.) I worked on the styling and the functionality to upload profile image onto the server. 
 
@@ -763,7 +786,7 @@ Styling the form was relatively straight forward, but tricky for this image uplo
 
 <br/>
 
-### Form Animation
+#### Form Animation
 
 The form has separate animation depending on if the submission was succssful or not.
 
@@ -799,17 +822,75 @@ This keyframe animation is also used when user adds an item in the shopping bask
 }
 ```
 
+<br/>
 
+## Other Features
 
+There are other key features of the website which my team members mainly worked on (I assisted with most of the styling and adding some animation). I have listed these below:
 
-## Final Thoughts
+### Comment
 
-### Wins and Challenges
+When logged in, users can add reviews and rating by clicking on the comment button and completing the form. 
+
+<p align="center">
+	  <img src="README_images/comment_button.gif" width="500"  alt="comment button" />
+</p>
+
+<p align="center">
+	  <img src="README_images/comment.png" width="500"  alt="comment form" />
+</p>
+
+<p align="center">
+	  <img src="README_images/comment_displayed.png" width="500"  alt="comment displayed" />
+</p>
+
+The user who added the comment can also delete the comment (error message appears if different user tries to add comment).
 
 
 <br />
 
+### Purchasing Items
+
+<p align="center">
+	  <img src="README_images/adding_to_basket.gif" width="500"  alt="adding to shopping basket" />
+</p>
+
+Users can add item into the shopping basket by clicking on the 'Add to Basket' button. 
+
+<p align="center">
+	  <img src="README_images/shopping_basket.png" width="500"  alt="shopping basket" />
+</p>
+
+Items added to the basket can then be reviewed by clicking on the shopping basket icon. Users can also Checkout from this page.
+
+<p align="center">
+	  <img src="README_images/checkout_one.png" width="500"  alt="checkout page" />
+</p>
+
+This takes user to a page where they can enter the payment detail and address. This is a 'fake' page, so the data is not saved in the backend. In real life we would probably hook this up to a third party e-commerce framework. However, the page does have a validation feature which for example checks if the credit card number has the right number of digits.
+
+<p align="center">
+	  <img src="README_images/checkout_two.png" width="500"  alt="Eevee thank you page" />
+</p>
+
+Users can then submit the payment details to complete the purchase.
+
+<br />
+
+## Final Thoughts
+
+### Wins and Challenges
+This was the largest project I had ever worked on at the time, and also the first time I had collaborated using Git to push and pull branches. Although I worked mainly on the frontend, I discussed frequently with the team member who was working on the backend. 
+
+On top of personal coding challenges, there were times when I reviewed my team mate's codes, trying to come up with solutions together. I felt that the process of explaining my own codes helped me see them objectively, helping me to refine them.
+
+<br />
+
 ### Key Learnings
+
+Since I was working with massive amount of assets and data, it pushed me to use approaches I never would have attempted other wise, such as the use of command line command to sort files, and retrieving data from Cloudinary API using cURL request. I also used Google Sheets extensively for sorting and formating data.
+
+Above all, the main lesson learnt from the project was the experience of coding in team. In prior group work I already appreciated the importance of good mock ups to calibrate our end goal. This was even more crucial in this project due to its scope. Since this project was ambitious in scale, there were several features we could not polish to the level we had hoped, however it certainly pushed us to work at the highest level we can.
 
 
 (Click [here](https://pokezonshop.herokuapp.com/) to see project)
