@@ -10,8 +10,8 @@
 	* [Creating Seed Data for the Database](./README.md#creating-seed-data-for-the-database)
 	* [Nav Bar](./README.md#nav-bar)
     * [Search Bar](./README.md#search-bar)
+    * [Displaying Items Based on Search Bar Query](./README.md#displaying-items-based-on-search-bar-query)
   * [Hover Effects](./README.md#hover-effects)
-  * [Displaying Items Based on Search Bar Query](./README.md#displaying-items-based-on-search-bar-query)
   * [Pagination](./README.md#pagination)
   * [Home Screen](./README.md#home-screen)
     * [Carousel](./README.md#carousel)
@@ -299,6 +299,42 @@ const resizeCategoryWidth = e => {
 ```
 <br />
 
+### Displaying Items Based on Search Bar Query
+
+When users type in the search criteria in the input field, it is set to state as the 'searchCriteria'. The category selected in the dropdown field is also set to state as the 'category' variable. These are passed on to the URL when the user clicks on the on the search icon (magnifying glass icon), using the function below. If no category is chosen, the 'chosenCategory' is set to 'all', and 'chosenSearchCriteria is set to '0' if none is specified. User is taken to the new URL using the `useHistory` hook imported from 'react-router-dom'.
+
+```
+  const handleSubmit = e =>{
+    e.preventDefault()
+    const chosenCategory = category ? category.toLowerCase() : 'all'
+    const chosenSearchCriteria = searchCriteria ? searchCriteria.toLowerCase() : '0'
+    history.push(`/pokeindex/${chosenCategory}/${chosenSearchCriteria}/1`) 
+  }
+```
+
+
+In the example below, user is taken to `https://pokezonshop.herokuapp.com/pokeindex/pokeballs/ultra/1` since they selected 'Pokeballs' in the dropdown and typed 'ultra' in the input field. 
+
+
+<p align="center">
+	  <img src="README_images/search_index.png" alt="search result shown for 'ultra' within 'pokeballs'" />
+</p>
+
+The search query in the URL is accessed using the `useParams` hook imported from 'react-router-dom', which is used for the filter function below:
+
+```
+  const filterItems = (items)=> {
+    if (category === 'all' && searchCriteria === '0') return items
+    let result = items
+    result = category === 'all' ? result : result.filter(item => item.category === category )
+    result = searchCriteria === '0' ? result : result.filter(item => item.name.includes(searchCriteria))
+    return result
+  }
+```
+Due to time constraint, the filter only checks the item's category and name. There is room to enhance this feature by having the filter also check through other fields, such as user comments and item description.
+
+<br />
+
 ### Hover Effects
 
 Various hover effects were applied to buttons. In previous projects I had often animated the button itself on hover, but this time I experimented with animating the icon displayed inside the button. 
@@ -354,41 +390,6 @@ export function isAuthenticated() {
 ```
 <br />
 
-### Displaying Items Based on Search Bar Query
-
-When users type in the search criteria in the input field, it is set to state as the 'searchCriteria'. The category selected in the dropdown field is also set to state as the 'category' variable. These are passed on to the URL when the user clicks on the on the search icon (magnifying glass icon), using the function below. If no category is chosen, the 'chosenCategory' is set to 'all', and 'chosenSearchCriteria is set to '0' if none is specified. User is taken to the new URL using the `useHistory` hook imported from 'react-router-dom'.
-
-```
-  const handleSubmit = e =>{
-    e.preventDefault()
-    const chosenCategory = category ? category.toLowerCase() : 'all'
-    const chosenSearchCriteria = searchCriteria ? searchCriteria.toLowerCase() : '0'
-    history.push(`/pokeindex/${chosenCategory}/${chosenSearchCriteria}/1`) 
-  }
-```
-
-
-In the example below, user is taken to `https://pokezonshop.herokuapp.com/pokeindex/pokeballs/ultra/1` since they selected 'Pokeballs' in the dropdown and typed 'ultra' in the input field. 
-
-
-<p align="center">
-	  <img src="README_images/search_index.png" alt="search result shown for 'ultra' within 'pokeballs'" />
-</p>
-
-The search query in the URL is accessed using the `useParams` hook imported from 'react-router-dom', which is used for the filter function below:
-
-```
-  const filterItems = (items)=> {
-    if (category === 'all' && searchCriteria === '0') return items
-    let result = items
-    result = category === 'all' ? result : result.filter(item => item.category === category )
-    result = searchCriteria === '0' ? result : result.filter(item => item.name.includes(searchCriteria))
-    return result
-  }
-```
-Due to time constraint, the filter only checks the item's category and name. There is room to enhance this feature by having the filter also check through other fields, such as user comments and item description.
-
-<br />
 
 ### Pagination
 
