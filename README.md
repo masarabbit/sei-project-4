@@ -20,7 +20,7 @@
   * [Animated Components](./README.md#animated-components)
     * [Loading Screen](./README.md#loading-screen)
     * [Moving Background](./README.md#moving-background)
-    * [Other Animated Pokémon](./README.md#other-animated-pokemon)
+    * [Other Animated Pokémon](./README.md#other-animated-pokémon)
   * [User Registration and Login Forms](./README.md#user-registration-and-login-forms)
     * [Registration](./README.md#registration)
     * [Form Animation](./README.md#form-animation)  
