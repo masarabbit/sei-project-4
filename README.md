@@ -12,10 +12,11 @@
       * [Search Bar](./README.md#search-bar)
       * [Displaying Items Based on Search Bar Query](./README.md#displaying-items-based-on-search-bar-query)
   * [Hover Effects](./README.md#hover-effects)
+  * [Login State](./README.md#login-state)
   * [Pagination](./README.md#pagination)
   * [Home Screen](./README.md#home-screen)
     * [Carousel](./README.md#carousel)
-    * [Randomly Picked Items](./README.md#login-state)
+    * [Randomly Picked Items](./README.md#randomly-picked-items)
   * [Animated Components](./README.md#animated-components)
     * [Loading Screen](./README.md#loading-screen)
     * [Moving Background](./README.md#moving-background)
@@ -498,7 +499,6 @@ The prev button is hidden when on first page, and the next button is hidden when
 
 I also worked on the home page, which consisted of two sections: the carousel banner, and divs displaying random items.
 
-<br />
 
 #### Carousel
 
