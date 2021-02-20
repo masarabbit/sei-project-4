@@ -20,7 +20,7 @@
   * [Animated Components](./README.md#animated-components)
     * [Loading Screen](./README.md#loading-screen)
     * [Moving Background](./README.md#moving-background)
-    * [Other Animated Pokémon](./README.md#loading-screen)
+    * [Other Animated Pokémon](./README.md#other-animated-pokemon)
   * [User Registration and Login Forms](./README.md#user-registration-and-login-forms)
     * [Registration](./README.md#registration)
     * [Form Animation](./README.md#form-animation)  
@@ -909,4 +909,4 @@ Since I was working with massive amount of assets and data, it pushed me to use 
 Above all, the main lesson learnt from the project was the experience of coding as a team. In prior group work I already appreciated the importance of good mockups to calibrate our end goal. This was even more crucial in this project due to its scope. Since this project was ambitious in scale, there were several features we could not polish to the level we had hoped, however it certainly pushed us to work at the highest level we could at the time.
 
 
-(Click [here](https://pokezonshop.herokuapp.com/) to see project.)
+(Click [here](https://pokezonshop.herokuapp.com/) to see project. Following login detail can be used for access: email: 'masa@email.com' , password: 'pass'.)
