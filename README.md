@@ -299,7 +299,7 @@ const resizeCategoryWidth = e => {
 ```
 <br />
 
-### Displaying Items Based on Search Bar Query
+#### Displaying Items Based on Search Bar Query
 
 When users type in the search criteria in the input field, it is set to state as the 'searchCriteria'. The category selected in the dropdown field is also set to state as the 'category' variable. These are passed on to the URL when the user clicks on the on the search icon (magnifying glass icon), using the function below. If no category is chosen, the 'chosenCategory' is set to 'all', and 'chosenSearchCriteria is set to '0' if none is specified. User is taken to the new URL using the `useHistory` hook imported from 'react-router-dom'.
 
