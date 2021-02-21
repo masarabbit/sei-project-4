@@ -109,7 +109,7 @@ Based on the mockup, we were able to roughly work out what task we needed to bui
 
 During the project, we mainly worked individually on our own parts and merged them together with Git. However, to get started we set up the boiler plate and basic models together, using Zoom to screen share. The key models we made were the 'user' model and the 'item' (product) model below. Smaller models for 'comment' and 'shippping basket' was also made as the project progressed. At the start, the 'user' model only had the minimum field required for testing registration and login. More fields were added as we built up the website.
 
-```
+```js
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true, maxlength: 40 },
   email: { type: String, required: true, unique: true },
@@ -123,7 +123,7 @@ const userSchema = new mongoose.Schema({
 })
 ```
 
-```
+```js
 const itemSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   stock: { type: Number, required: true },
@@ -187,7 +187,7 @@ The request above returned a JSON string, which I was able to parse and filter t
 
 The final seed data looked like below. 
 
-```
+```js
 export default [
   {
     name: 'master-ball',
@@ -234,7 +234,7 @@ Once the seed data was completed, the first component I worked on was the Nav ba
 
 The search bar is made up of three main components - select box (the drop down), input field and the submit button. These elements are wrapped within a form.
 
-```
+```js
       <div className="search_wrapper">
         <form className="search"
           onSubmit={handleSubmit}
@@ -268,24 +268,24 @@ One thing I noticed about the drop down in the original Amazon site is that the 
 
 I was able to recreate this by adding an inline style in the select element. 
 
-```
-          <select
-            style={{ width: `${categoryWidth}px` }}
-            onChange={handleSelect}
-            value={category}
-          >
-            <option value="All">All</option>
+```js
+  <select
+    style={{ width: `${categoryWidth}px` }}
+    onChange={handleSelect}
+    value={category}
+  >
+    <option value="All">All</option>
 
-             (... options listed here ...)
+      (... options listed here ...)
 
-            <option value="Jewels">Jewels</option>
-          </select>  
+    <option value="Jewels">Jewels</option>
+  </select>  
 
 ```
 
 The state variable 'categoryWidth' is adjusted using function below. It would basically set the width of the select element by referringg to the selected value, taking into consideration that some letters such as 'I' and 't' would be thinner than others. Since letter width would differ depending on the font, it took some trial and error to achieve the right balance.
 
-```
+```js
 const resizeCategoryWidth = e => {
     const thinLetters = ['I','i','j','l','t','r']
     let textLength = 0
@@ -304,7 +304,7 @@ const resizeCategoryWidth = e => {
 
 When users type in the search criteria in the input field, it is set to state as the 'searchCriteria'. The category selected in the dropdown field is also set to state as the 'category' variable. These are passed on to the URL when the user clicks on the on the search icon (magnifying glass icon), using the function below. If no category is chosen, the 'chosenCategory' is set to 'all', and 'chosenSearchCriteria is set to '0' if none is specified. User is taken to the new URL using the `useHistory` hook imported from 'react-router-dom'.
 
-```
+```js
   const handleSubmit = e =>{
     e.preventDefault()
     const chosenCategory = category ? category.toLowerCase() : 'all'
@@ -323,7 +323,7 @@ In the example below, user is taken to `https://pokezonshop.herokuapp.com/pokein
 
 The search query in the URL is accessed using the `useParams` hook imported from 'react-router-dom', which is used for the filter function below:
 
-```
+```js
   const filterItems = (items)=> {
     if (category === 'all' && searchCriteria === '0') return items
     let result = items
@@ -342,7 +342,7 @@ Various hover effects were applied to buttons. In previous projects I had often 
 
 For the Pokéball, `bottom`, `transform: scale` and `transform rotate` was manipulated to create the effect of Pokéball being bounced, with keyframes below:
 
-```
+```css
 @keyframes rotating {
   0% {bottom: 0; transform: scale(1) rotate(0deg);}
   45% {bottom: 5px; transform: scale(0.9,1.1) rotate(360deg);}
@@ -354,7 +354,7 @@ For the Pokéball, `bottom`, `transform: scale` and `transform rotate` was manip
 
 The silhouette of Pikachu for the login has a similar keyframe, without the `transform rotate`.
 
-```
+```css
 @keyframes hop {
   0% {bottom: 0; transform: scale(1);}
   50% {bottom: 5px; transform: scale(0.9,1.1);}
@@ -381,7 +381,7 @@ When user is logged in, the register and login button is replaced with the user 
 
 The 'isAuthenticated' function below checks if user is logged in or not by checking the validity of the token placed on the browser's local storage. The function is used to set the variable 'isloggedIn', used to conditionally render elements on the Nav bar.
 
-```
+```js
 export function isAuthenticated() {
   const payload = getPayload()
   if (!payload) return false 
@@ -396,7 +396,7 @@ export function isAuthenticated() {
 
 The number of items shown on each page were controlled by slicing the items array before mapping them onto the page. This was controlled using the following variable (the 'page' variable also uses the `useParams` hook).
 
-```
+```js
 const { page } = useParams()
 const itemToDisplay = 12
 const firstItem = (page - 1) * itemToDisplay
@@ -414,7 +414,7 @@ if (items) {
 
 When the user navigates to a page by clicking on the page number or the arrow button,  the page number in the URL changes, which in turn changes which section of the item array is sliced.
 
-```
+```js
 function prevPage(){
   history.push(`/${Number(page) - 1}`)
 }
@@ -434,7 +434,7 @@ function goToPage(pageNo){
 Each buttons for navigating the page is mappped onto the bottom of the page, referencing the current page number and maximum page number. This is done by first creating an array to be map out, using the switch statement below. For example, if the user is on page five, and there are 10 pages to display, the page array would be `['1','...','...','4','5','6','...+','10']`. `Set` is used to remove any excess buttons in the page array ('...+' was used along side '...' so that it isn't seen as a duplication). For the example array mentioned earlier, the array would become `['1','...','4','5','6','...+','10']` once the duplicates are removed. The idea is, only page one, max page, current page, page before current and page after current is displayed. All other pages are abbreviated (otherwise, if you had 40 pages there would be 40 buttons, which would clutter the navigation).
 
 
-```
+```js
 function mapPageLinks(maxvalue){
   const pages = []
 
@@ -504,7 +504,7 @@ I also worked on the home page, which consisted of two sections: the carousel ba
 
 The carousel is essentially a wide div wrapped within a narrower div. The position of the wide div is adjusted using inline styling, which references a variable called 'heropos'. This variable is altered using a function which is called every 4.5 seconds using `setTimeout`.
 
-```
+```js
   <div className="home_hero_wrapper">
     <div className="left_arrow"  onClick={prevHero}>
       <img className="left" src={leftArrow} alt="left arrow" />
@@ -538,13 +538,12 @@ The carousel is essentially a wide div wrapped within a narrower div. The positi
       <img className="right" src={rightArrow} alt="right arrow" />
     </div> 
   </div>
-
 ```
 <br />
 
 The user is able to interrupt the `setTimeout` and manually switch to different section of the carousel by clicking the left and right arrow button. The function for controlling this action clears any ongoing `setTimeout` using `clearTimeout` to prevent the automatic switching to interfere with the manual switching.
 
-```
+```js
  const nextHero = () =>{ 
     clearTimeout(timer)
     const newPos = heroPos > -400 ? heroPos - 100 : 0
@@ -562,7 +561,7 @@ The user is able to interrupt the `setTimeout` and manually switch to different 
 
 After the carousel is switched, it carries on with the cycle since the change to 'heropos' variable would trigger a `useEffect`, which sets a new  `setTimeout `. The `useEffect` also has a cleanup function to clear any ongoing `setTimeout` when the user navigates away from the page.
 
-```
+```js
   React.useEffect(() => {
     timer = setTimeout(()=>{
       nextHero()
@@ -585,7 +584,7 @@ Using a ternary operator, the carousel returns to the first image when it reache
 
 When the data is fetched from the API, random item is picked based on several criteria, then set to state.
 
-```
+```js
   React.useEffect(() => {
     const getData = async () => {
       try {
@@ -608,7 +607,7 @@ When the data is fetched from the API, random item is picked based on several cr
 The random selection is made using functions below. The variable 'pickRandomCheapItem' filters out 'berries & appricorn', and the function 'makeRandomArray' filters out 'pokeballs' as well as 'berries & appricorn', to reduce the chance of similar items appearing on the page (since many of the pokeballs and berries are also cheap, they are also likely to appear as random cheap item unless they are filtered). 
 
 
-```
+```js
  function pickRandomItem(array,category){
     const filteredArray = array.filter(item=>{
       return item.category === category
@@ -633,7 +632,6 @@ The random selection is made using functions below. The variable 'pickRandomChea
     }
     return randomItems
   }
-
 ```
 
 <br />
@@ -669,7 +667,7 @@ I made number of other animated components placed around the website.
 This component displays a loading bar, with Pikachu running above it. The bar and Pikachu is animated using two separate css keyframe animations below:
 
 
-```
+```css
 .inside {
   float: left;
   width: 0%;
@@ -692,7 +690,6 @@ This component displays a loading bar, with Pikachu running above it. The bar an
   0%{ left: 0%;}
   100%{ left: calc(100% - 100px);}
 }
-
 ```
 
 <br/>
@@ -706,7 +703,7 @@ This component displays a loading bar, with Pikachu running above it. The bar an
 The background is tiled, and scrolls to the upper right direction slowly. This effect is created by applying keyframe animation to the `background-position`, which is applied to the body:
 
 
-```
+```css
 body {
   padding: 0;
   margin: 0;
@@ -715,10 +712,9 @@ body {
   background: url($bg) repeat 0 0;
   animation: bg_scrolling 8s infinite linear; 
 }
-
 ```
 
-```
+```css
 @keyframes bg_scrolling {
   0% { background-position: 0 100px; }
   100% { background-position: 100px 0; }
@@ -782,7 +778,7 @@ By clicking on the upload button, the user is able to select an image, which get
 
 Styling the form was relatively straight forward, but tricky for this image upload. This is because it involved hiding the default browser input, then overwriting it with a custom label. A label was placed with `htmlFor` to act on behalf the actual input field. 
 
-```
+```js
  <div className="upload_button_wrapper">
     <div className="input_wrapper">
       <label className="upload_button" htmlFor="upload" > 
@@ -812,7 +808,7 @@ When there is an error on the form, for example when the field is entered incorr
 	  <img src="README_images/login_fail.gif" width="500"  alt="login fail" />
 </p>
 
-```
+```css
 @keyframes shake {
   0% { margin-left: -10px;}
   50% { margin-left: 10px;}
@@ -827,7 +823,7 @@ When the form submission is successful, a class is added which animates using `t
 	  <img src="README_images/accepted.gif" width="500"  alt="form accepted" />
 </p>
 
-```
+```css
 @keyframes accepted_effect {
   0% { transform: scale(1) ; margin-top: 0;}
   70% { transform: scale(1.2,0.8); margin-top: 10vh; }
