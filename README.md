@@ -27,12 +27,15 @@
 * [Other Features](./README.md#other-features)
     * [User Comments](./README.md#user-comments)
     * [Purchasing Items](./README.md#purchasing-items)  
+* [Notable Bugs](./README.md#notable-bugs)      
 * [Final Thoughts](./README.md#final-thoughts)
 	* [Wins and Challenges](./README.md#wins-and-challenges)
 	* [Key Learnings](./README.md#key-learnings)
 
+<br />
+<br />
 
-(Click [here](https://pokezonshop.herokuapp.com/) to see project. Following login detail can be used for access: email: 'masa@email.com' , password: 'pass'.)
+Click [here](https://pokezonshop.herokuapp.com/) to see project. Following login detail can be used for access: email: 'masa@email.com' , password: 'pass'.
 
 
 <br/>
@@ -283,7 +286,7 @@ I was able to recreate this by adding an inline style in the select element.
 
 ```
 
-The state variable 'categoryWidth' is adjusted using function below. It would basically set the width of the select element by referringg to the selected value, taking into consideration that some letters such as 'I' and 't' would be thinner than others. Since letter width would differ depending on the font, it took some trial and error to achieve the right balance.
+The state variable 'categoryWidth' is adjusted using function below. It would basically set the width of the select element by referring to the selected value, taking into consideration that some letters such as 'I' and 't' would be thinner than others. Since letter width would differ depending on the font, it took some trial and error to achieve the right balance.
 
 ```js
 const resizeCategoryWidth = e => {
@@ -889,12 +892,41 @@ Users can then submit the payment details to complete the purchase.
 
 <br />
 
+## Notable Bugs
+
+Most of the issues I encountered during the project were related to rerenders. Sometimes actions on the page would not cause a rerender when I wanted them - for example, the buttons on the Nav bar changes depending on user's state of login, but initially the change did not take place right after logging out. I had a habit to resolve these issues by refreshing the page with `window.reload()`, but having learnt that these were bad practice, I needed better ways to solve it.
+
+I was able to solve the issue by re-requesting the latest data from the database using the `useEffect` hook. With the Nav bar, the `useEffect` is triggered with changes to the URL, by using the 'pathname' variable from the `useLocation` hook from 'react-router-dom'. To explain this in more detail:
+  * When the user is logged in, 'getUserInfo()' would retrieve the user's data from the database, so it can be used to display the user profile image in the Nav bar.
+  * Logging out takes the user back to the login page, so this would change the URL, and trigger the `useEffect`.
+  * While the user is logged out, the 'isLoggedIn' variable would be falsy, so 'getUserInfo()' will not fire again. Since the user data would not be available, the profile image will no longer be displayed.
+
+```js
+  const { pathname } = useLocation()
+
+
+  React.useEffect(() => {
+    if (!isLoggedIn) return
+    const getData = async () => {
+      try {
+        const { data } = await getUserInfo()
+        setUserData(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getData()
+  }, [pathname])
+```
+<br />
+
+
 ## Final Thoughts
 
 ### Wins and Challenges
-This was the largest project I had ever worked on at the time, and also the first time I had collaborated using Git to push and pull branches. Although I worked mainly on the front end, I discussed frequently with the team member who was working on the back end. 
+This was the largest project I had ever worked on at the time, and also the first time I had collaborated using Git to push and pull branches. We communicated frequently within the team, and did most of Git push while screen sharing on Zoom so that we could discuss whenever our branches conflicted. The process was tricky to begin with as we were all new to it, but repeating the routine each morning and evening helped us get used to it. 
 
-We mainly worked on our own section, but sometimes worked on issues together when we were stuck. I felt that the process of explaining my own codes helped me see them objectively, helping me to refine them.
+We mainly worked on our own sections, but sometimes worked on issues together when we were stuck. I felt that the process of explaining my own codes helped me see them objectively, helping me to refine them.
 
 <br />
 
@@ -904,5 +936,4 @@ Since I was working with massive amount of assets and data, it pushed me to use 
 
 Above all, the main lesson learnt from the project was the experience of coding as a team. In prior group work I already appreciated the importance of good mockups to calibrate our end goal. This was even more crucial in this project due to its scope. Since this project was ambitious in scale, there were several features we could not polish to the level we had hoped, however it certainly pushed us to work at the highest level we could at the time.
 
-
-(Click [here](https://pokezonshop.herokuapp.com/) to see project. Following login detail can be used for access: email: 'masa@email.com' , password: 'pass'.)
+Click [here](https://pokezonshop.herokuapp.com/) to see project. Following login detail can be used for access: email: 'masa@email.com' , password: 'pass'.
