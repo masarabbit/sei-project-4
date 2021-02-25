@@ -932,7 +932,7 @@ We mainly worked on our own sections, but sometimes worked on issues together wh
 
 ### Key Learnings
 
-Since I was working with massive amount of assets and data, it pushed me to use approaches I never would have attempted other wise, such as the use of command line command to sort files, and retrieving data from Cloudinary API using cURL request. I also used Google Sheets extensively for sorting and formating data.
+Since I was working with massive amount of assets and data, it pushed me to use approaches I never would have attempted otherwise, such as the use of command line command to sort files, and retrieving data from Cloudinary API using cURL request. I also used Google Sheets extensively for sorting and formating data.
 
 Above all, the main lesson learnt from the project was the experience of coding as a team. In prior group work I already appreciated the importance of good mockups to calibrate our end goal. This was even more crucial in this project due to its scope. Since this project was ambitious in scale, there were several features we could not polish to the level we had hoped, however it certainly pushed us to work at the highest level we could at the time.
 
