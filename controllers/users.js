@@ -65,23 +65,39 @@ async function addItemToBasket(req, res, next) {
   }
 }
 
+// async function updateBasket(req, res, next) {
+//   const { itemId } = req.params
+  
+//   try {
+//     const user = await User.findById(req.currentUser._id)
+//     if (!user) throw new Error('notFound')
+//     const itemToUpdate = user.basket.id(itemId)
+//     if (!itemToUpdate) throw new Error('Item not found')
+//     await itemToUpdate.remove()
+//     user.basket.push(req.body)
+//     await user.save()
+//     return res.status(201).json(user)
+//   } catch (err) {
+//     console.log(err)
+//     next(err)
+//   }
+
+// }
+
 async function updateBasket(req, res, next) {
   const { itemId } = req.params
-  
   try {
     const user = await User.findById(req.currentUser._id)
     if (!user) throw new Error('notFound')
     const itemToUpdate = user.basket.id(itemId)
-    if (!itemToUpdate) throw new Error('Item not found')
-    await itemToUpdate.remove()
-    user.basket.push(req.body)
+    if (!itemToUpdate) throw new Error ('Item not found')
+    itemToUpdate.quantity = req.body.quantity
     await user.save()
     return res.status(201).json(user)
   } catch (err) {
     console.log(err)
     next(err)
   }
-
 }
 
 async function removeItemFromBasket(req, res, next){
