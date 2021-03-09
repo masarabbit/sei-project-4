@@ -44,31 +44,7 @@
 
 //* page load animation
 
-.float_up_no_margin {
-  position: relative;
-  animation: float_up forwards 0.8s;
-}
 
-@keyframes float_up_no_margin {
-  0% { transform: scale(1); margin-top: 200vh;}
-  70% { transform: scale(1.04,0.96); margin-top: 10px;}
-  80% { transform: scale(0.96,1.04); margin-top: 0px;}
-  90% { transform: scale(1.04,0.96); }
-  100% { transform: scale(1); margin-top: 0px;}
-}
-
-.float_up {
-  position: relative;
-  animation: float_up forwards 0.8s;
-}
-
-@keyframes float_up {
-  0% { transform: scale(1); margin-top: 200vh;}
-  70% { transform: scale(1.04,0.96); margin-top: 30px;}
-  80% { transform: scale(0.96,1.04); margin-top: 50px;}
-  90% { transform: scale(1.04,0.96); }
-  100% { transform: scale(1); margin-top: 50px;}
-}
 
 .float_up_register {
   position: relative;
@@ -270,4 +246,69 @@
 @keyframes bg_scrolling {
   0% { background-position: 0 100px; }
   100% { background-position: 100px 0; }
+}
+
+
+@media screen and (min-width:0px) {
+
+  .float_up {
+    position: relative;
+    animation: float_up_higher forwards 0.8s;
+  }
+
+  @keyframes float_up_higher {
+    0% { transform: scale(1); margin-top: 200vh;}
+    70% { transform: scale(1.04,0.96); margin-top: -40px;}
+    80% { transform: scale(0.96,1.04); margin-top: 20px;}
+    90% { transform: scale(1.04,0.96); }
+    100% { transform: scale(1); margin-top: 20px;}
+  }
+
+  .float_up_no_margin {
+    position: relative;
+    animation: float_up_even_higher forwards 0.8s;
+  }
+
+  
+  @keyframes float_up_even_higher {
+    0% { transform: scale(1); margin-top: 200vh;}
+    70% { transform: scale(1.04,0.96); margin-top: -70px;}
+    80% { transform: scale(0.96,1.04); margin-top: -50px;}
+    90% { transform: scale(1.04,0.96); }
+    100% { transform: scale(1); margin-top: -50px;}
+  }
+
+
+}
+
+
+
+@media screen and (min-width:700px) {
+  
+  .float_up {
+    animation: float_up forwards 0.8s;
+  }
+
+  @keyframes float_up {
+    0% { transform: scale(1); margin-top: 200vh;}
+    70% { transform: scale(1.04,0.96); margin-top: 30px;}
+    80% { transform: scale(0.96,1.04); margin-top: 50px;}
+    90% { transform: scale(1.04,0.96); }
+    100% { transform: scale(1); margin-top: 50px;}
+  }
+  
+
+  .float_up_no_margin {
+    position: relative;
+    animation: float_up_no_margin forwards 0.8s;
+  }
+  
+  @keyframes float_up_no_margin {
+    0% { transform: scale(1); margin-top: 200vh;}
+    70% { transform: scale(1.04,0.96); margin-top: 10px;}
+    80% { transform: scale(0.96,1.04); margin-top: 0px;}
+    90% { transform: scale(1.04,0.96); }
+    100% { transform: scale(1); margin-top: 0px;}
+  }
+
 }

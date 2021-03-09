@@ -39,14 +39,14 @@ function PokeShow() {
       try { 
         const { data } = await getSingleItem(id)
         setItem(data)
-        console.log(item) 
+        // console.log(item) 
       } catch (err) {
         setHasError(true)
       }
     }
     getData()
   },[id])
- 
+
   //* get all items
   React.useEffect(() => {
     const getData = async () => {
@@ -110,7 +110,7 @@ function PokeShow() {
   }
 
 
-  if (id) console.log('id',id)
+  // if (id) console.log('id',id)
 
 
   const addToBasket = async e => {
@@ -123,7 +123,7 @@ function PokeShow() {
     try {
       const response = await axios.post('/api/userprofile/basket', body, headers())
       setItemInBasket(true)
-      console.log('the response', response)
+      // console.log('the response', response)
     } catch (err) {
     // console.log(err.response.status)
       if (err.response.status === 401) {
@@ -138,7 +138,7 @@ function PokeShow() {
   function getUserId(){
     const payload = getPayload()
     if (!payload) return false
-    console.log( 'userId on pokeshow',payload.sub )
+    // console.log( 'userId on pokeshow',payload.sub )
     return payload.sub
   }  
   getUserId()
@@ -205,15 +205,19 @@ function PokeShow() {
           <>
             <div className="product_wrapper">
               <img className= "product_image" src={item.image} alt={item.name} />
-              <div className="product_info">
-                <div className="rating">
-                  {mapStars(itemRating(item.avgRating))}
+              <div className="product_info default_box_style">
+                
+                <div className="name_wrapper">
+                  <label>
+                    {item.name}
+                    <img src="../assets/poke_dollar.svg" alt="pokedollar sign" /> {item.price}
+                  </label>
+
+                  <div className="rating">
+                    {mapStars(itemRating(item.avgRating))}
+                  </div>
                 </div>
               
-                <label>
-                  {item.name}
-                  <img src="../assets/poke_dollar.svg" alt="pokedollar sign" /> {item.price}
-                </label>
                 <div className="description">{item.description}</div>
                 <div className="button_wrapper comment">
                   <Link to={`/pokecomment/${id}`}>
@@ -223,27 +227,29 @@ function PokeShow() {
                   </Link>
                 </div>
               </div>
-              <form className={`buy_wrapper ${itemInBasket && 'accepted'}`} onSubmit={addToBasket}>
-                {item.stock ?
-                  <p className={item.stock <= 2 && 'red_text'}> {item.stock <= 2 && 'only '}{item.stock} left in stock</p>
-                  :
-                  <p className="red_text">sorry, out of stock</p>
-                }
-                <input type="number" defaultValue={itemQty} name="qty" min="1" max={item.stock} onChange={(e)=>setItemQty(e.target.value)}/>
+              <div className="buy_wrapper_container">
+                <form className={`default_box_style buy_wrapper ${itemInBasket ? 'accepted' : ''}`} onSubmit={addToBasket}>
+                  {item.stock ?
+                    <p className={item.stock <= 2 ? 'red_text' : ''}> {item.stock <= 2 && 'only '}{item.stock} left in stock</p>
+                    :
+                    <p className="red_text">sorry, out of stock</p>
+                  }
+                  <input type="number" defaultValue={itemQty} name="qty" min="1" max={item.stock} onChange={(e)=>setItemQty(e.target.value)}/>
 
-                { itemInBasket ? <p className="blue">Item added in basket!!</p> : null }
-                { notLoggedIn ? <p className="blue">! Login to add to basket</p> : null}
-                <div className="button_wrapper">
-                  <button>
-                    <img src="../assets/pokeball_orange.svg" alt="pokeball" /> Add to Basket
-                  </button>
-                </div>  
+                  { itemInBasket ? <p className="blue">Item added in basket!!</p> : null }
+                  { notLoggedIn ? <p className="blue">! Login to add to basket</p> : null}
+                  <div className="button_wrapper">
+                    <button>
+                      <img src="../assets/pokeball_orange.svg" alt="pokeball" /> Add to Basket
+                    </button>
+                  </div>  
 
-              </form> 
+                </form> 
+              </div>
               { itemAlreadyInBasket ? 
                 <div>
                   <p>! Item already in basket</p> 
-                  <button onClick={()=>setItemAlreadyInBasket(false)}>Ok</button>   {/* need styling here */}
+                  <button onClick={()=>setItemAlreadyInBasket(false)}>Ok</button>
                 </div>
                 : null }
             </div>

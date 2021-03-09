@@ -11,7 +11,6 @@ import MarchampSecurity from './MarchampSecurity'
 import PikachuLoadingScreen from './PikachuLoadingScreen'
 import ditto from '../assets/ditto.svg'
 
-/* need styling on this page */
 function PokeBasket() {
   const history = useHistory()
   const [user, setUser] = React.useState(null)
@@ -23,10 +22,10 @@ function PokeBasket() {
     const getData = async () => {
       try { 
         const { data } = await axios.get('/api/userprofile', headers())
-        console.log(data)
+        // console.log(data)
         setUser(data)
       } catch (err) {
-        console.log(err.response.status)
+        // console.log(err.response.status)
         if (err.response.status === 401) {
           setUnauthorized(true)
           return
@@ -37,12 +36,12 @@ function PokeBasket() {
   }, [])
 
   const handleBasketItemDelete = async e => {
-    console.log(e.target.dataset.item)
+    // console.log(e.target.dataset.item)
     const itemToDelete = e.target.dataset.item
     try {
       await axios.delete(`/api/userprofile/basket/${itemToDelete}`, headers())
       const { data } = await axios.get('/api/userprofile', headers())
-      console.log(data)
+      // console.log(data)
       
       if (data) e.target.parentNode.parentNode.parentNode.classList.add('slide_away')
       setTimeout(()=>{
@@ -124,7 +123,7 @@ function PokeBasket() {
       const response = await axios.put(`/api/userprofile/basket/update/${itemIdToUpdate}`, body, headers())
       const { data } = await axios.get('/api/userprofile', headers())
       setUser(data)
-      console.log(response)
+      // console.log(response)
     } catch (err) {
       console.log(err)
     }
@@ -177,9 +176,6 @@ function PokeBasket() {
                 {product.item.stock} left in stock
                 <input onClick={updateBasket} data-item={product._id} type="number" defaultValue={product.quantity} min="1" max={product.stock} onChange={(e)=>setItemQty(e.target.value)} />
               </div>
-              {/* <div className="description">
-                {product.item.description}
-              </div> */}
               
               <div className="button_wrapper flexend">
                 <button data-item={product._id} onClick={handleBasketItemDelete}>
